@@ -1,61 +1,404 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple CSS Example</title>
-    <link rel="stylesheet" href="style.css">
+    <title>شبیه‌ساز کلش رویال</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Titan+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #333;
+            --main-blue: #1c4b78;
+            --cr-blue: #3d70b8;
+            --cr-yellow: #fcd043;
+            --cr-orange: #ff9f0e;
+            --cr-wood: #d97b36;
+            --cr-gray: #e6e6e6;
+            --nav-bg: #222;
+            --font-main: 'Lalezar', cursive; /* فونت فارسی مشابه */
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: var(--font-main);
+        }
+
+        /* شبیه‌ساز صفحه موبایل */
+        .mobile-container {
+            width: 375px;
+            height: 667px; /* سایز استاندارد آیفون قدیمی */
+            background-color: var(--main-blue);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            border: 8px solid #000;
+        }
+
+        /* هدر (طلا و جم) */
+        .top-bar {
+            height: 60px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            background: linear-gradient(to bottom, #2b5685, #1c3a59);
+            border-bottom: 2px solid #000;
+            z-index: 10;
+        }
+
+        .resource {
+            background: rgba(0,0,0,0.4);
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            border: 1px solid #4a7ab5;
+        }
+
+        .gold { color: var(--cr-yellow); }
+        .gems { color: #50c878; }
+
+        /* محتوای اصلی */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            background-image: radial-gradient(#4a7ab5 10%, transparent 10%),
+            radial-gradient(#4a7ab5 10%, transparent 10%);
+            background-color: #2b5685;
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 15px;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        /* تب نبرد (خانه) */
+        .arena-display {
+            width: 100%;
+            height: 150px;
+            background: url('https://placehold.co/300x150/3d70b8/FFF?text=Arena+1') no-repeat center;
+            background-size: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 0 #000;
+            font-size: 24px;
+        }
+
+        .battle-btn {
+            background: linear-gradient(to bottom, #ffcc00, #ff9900);
+            border: 2px solid #fff;
+            border-radius: 12px;
+            padding: 15px 40px;
+            font-size: 28px;
+            color: #fff;
+            text-shadow: 2px 2px 0 #000;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #cc7a00, 0 10px 10px rgba(0,0,0,0.4);
+            transition: transform 0.1s;
+            margin-bottom: 30px;
+        }
+
+        .battle-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #cc7a00, 0 4px 4px rgba(0,0,0,0.4);
+        }
+
+        .chests-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 100%;
+            margin-top: auto; /* هل دادن به پایین */
+            padding-bottom: 10px;
+        }
+
+        .chest-slot {
+            background: rgba(0,0,0,0.3);
+            height: 70px;
+            border-radius: 8px;
+            border: 2px solid #1c3a59;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* تب کارت ها */
+        .deck-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            width: 100%;
+        }
+
+        .card {
+            aspect-ratio: 3/4;
+            background-color: #555;
+            border: 2px solid #000;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .elixir-cost {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background: #d0006f;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            border: 1px solid #fff;
+        }
+
+        .section-title {
+            color: white;
+            width: 100%;
+            text-align: right;
+            margin: 10px 0;
+            text-shadow: 1px 1px 0 #000;
+            border-bottom: 2px solid #1c3a59;
+            padding-bottom: 5px;
+        }
+
+        /* تب فروشگاه */
+        .shop-row {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        .shop-item {
+            min-width: 100px;
+            height: 120px;
+            background: var(--cr-wood);
+            border: 2px solid #5c3a1e;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px;
+        }
+        
+        .shop-item span { color: white; text-shadow: 1px 1px 0 #000; font-size: 12px; }
+        .price-tag { background: rgba(0,0,0,0.5); padding: 2px 5px; border-radius: 3px; font-size: 12px; color: #fff; }
+
+        /* نوار پایین (Navigation) */
+        .bottom-nav {
+            height: 70px;
+            background-color: var(--nav-bg);
+            border-top: 4px solid #4a7ab5;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 5px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.2s;
+            color: #fff;
+            width: 20%;
+        }
+
+        .nav-item.active {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+        
+        .nav-text {
+            font-size: 10px;
+        }
+        
+        /* آیکون های ساده با CSS */
+        .icon-shop::before { content: "🛒"; }
+        .icon-cards::before { content: "🎴"; }
+        .icon-battle::before { content: "⚔️"; font-size: 30px; }
+        .icon-social::before { content: "🛡️"; }
+        .icon-event::before { content: "🎉"; }
+
+    </style>
 </head>
-<body> 
-    <div class="container animate">
-        <h1 class="title">Simple and Beautiful CSS File</h1>
-        
-        <div class="card">
-            <h3>📦 Sample Card</h3>
-            <p>This is a simple card with beautiful effects. Hover over it to see it move!</p>
-            <button class="button">Primary Button</button>
-            <button class="button button-success">Success Button</button>
-        </div>
-        
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <h3>🎨 Beautiful Colors</h3>
-                    <p class="text-primary">Blue Text</p>
-                    <p class="text-success">Green Text</p>
-                    <p class="text-warning">Orange Text</p>
-                </div>
+<body>
+
+    <div class="mobile-container">
+        <div class="top-bar">
+            <div class="resource xp">
+                <span style="background: #3399ff; padding: 0 5px; border-radius: 50%;">13</span>
+                <span>User</span>
             </div>
-            <div class="col">
-                <div class="card">
-                    <h3>📋 Feature List</h3>
-                    <ul class="feature-list">
-                        <li>Responsive Design</li>
-                        <li>Smooth Animations</li>
-                        <li>Modern Color Scheme</li>
-                    </ul>
-                </div>
+            <div style="display: flex; gap: 10px;">
+                <div class="resource gold">12500 🟡</div>
+                <div class="resource gems">500 🟢</div>
             </div>
         </div>
-        
-        <div class="card">
-            <h3>📝 Contact Form</h3>
-            <form>
-                <div class="form-group">
-                    <label>Your Name:</label>
-                    <input type="text" class="form-control" placeholder="Enter your name...">
+
+        <div class="main-content">
+            
+            <div id="shop" class="tab-content">
+                <h3 class="section-title">پیشنهادهای روزانه</h3>
+                <div class="shop-row">
+                    <div class="shop-item"><span>کارت رایگان</span><div class="price-tag">رایگان</div></div>
+                    <div class="shop-item"><span>سرباز</span><div class="price-tag">100 🟡</div></div>
+                    <div class="shop-item"><span>تفنگدار</span><div class="price-tag">500 🟡</div></div>
                 </div>
-                <div class="form-group">
-                    <label>Message:</label>
-                    <textarea class="form-control" rows="3" placeholder="Your message..."></textarea>
+                
+                <h3 class="section-title">گنجینه‌ها</h3>
+                <div class="shop-row">
+                    <div class="shop-item" style="background: #555;"><span>صندوق نقره</span><div class="price-tag">30 🟢</div></div>
+                    <div class="shop-item" style="background: #gold;"><span>صندوق طلا</span><div class="price-tag">80 🟢</div></div>
                 </div>
-                <button type="submit" class="button">Send Message</button>
-            </form>
+            </div>
+
+            <div id="cards" class="tab-content">
+                <h3 class="section-title">دک نبرد (میانگین: 3.4)</h3>
+                <div class="deck-grid">
+                    <div class="card"><div class="elixir-cost">3</div></div>
+                    <div class="card"><div class="elixir-cost">4</div></div>
+                    <div class="card"><div class="elixir-cost">2</div></div>
+                    <div class="card"><div class="elixir-cost">5</div></div>
+                    <div class="card"><div class="elixir-cost">3</div></div>
+                    <div class="card"><div class="elixir-cost">6</div></div>
+                    <div class="card"><div class="elixir-cost">4</div></div>
+                    <div class="card"><div class="elixir-cost">3</div></div>
+                </div>
+                <h3 class="section-title">کلکسیون کارت‌ها</h3>
+                <div class="deck-grid">
+                     <div class="card" style="opacity: 0.5"></div>
+                     <div class="card" style="opacity: 0.5"></div>
+                     <div class="card" style="opacity: 0.5"></div>
+                     <div class="card" style="opacity: 0.5"></div>
+                </div>
+            </div>
+
+            <div id="battle" class="tab-content active">
+                <div class="arena-display">
+                    ARENA 12
+                </div>
+                
+                <div style="flex:1; display:flex; justify-content:center; align-items:center; width:100%;">
+                    <button class="battle-btn">نــبــرد</button>
+                </div>
+
+                <div class="chests-slots">
+                    <div class="chest-slot">خالی<br>باز کردن</div>
+                    <div class="chest-slot" style="background: rgba(200, 150, 50, 0.4); border-color: gold; color: white;">3h<br>باز کردن</div>
+                    <div class="chest-slot">خالی</div>
+                    <div class="chest-slot">خالی</div>
+                </div>
+            </div>
+
+            <div id="social" class="tab-content">
+                <h3 class="section-title">چت قبیله</h3>
+                <div style="background: rgba(0,0,0,0.3); width: 100%; padding: 10px; border-radius: 5px; color: white; font-size: 12px;">
+                    <p style="margin: 5px 0;"><span style="color: #88ccff">Ali:</span> سلام بچه‌ها کسی هست؟</p>
+                    <p style="margin: 5px 0;"><span style="color: #ffcc00">Reza:</span> درخواست کارت دادم</p>
+                    <p style="margin: 5px 0; color: orange;">Reza درخواست Hog Rider داد.</p>
+                </div>
+            </div>
+
+            <div id="events" class="tab-content">
+                <div style="width: 100%; height: 100px; background: purple; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; border: 2px solid white;">
+                    چالش اکسیر دو برابر
+                </div>
+            </div>
+
         </div>
-        
-        <div class="text-center mt-20">
-            <p class="text-dark">Made with ❤️ using pure CSS</p>
+
+        <div class="bottom-nav">
+            <div class="nav-item" onclick="switchTab('shop', this)">
+                <span class="nav-icon icon-shop"></span>
+                <span class="nav-text">فروشگاه</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('cards', this)">
+                <span class="nav-icon icon-cards"></span>
+                <span class="nav-text">کارت‌ها</span>
+            </div>
+            <div class="nav-item active" onclick="switchTab('battle', this)">
+                <span class="nav-icon icon-battle"></span>
+                <span class="nav-text">نبرد</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('social', this)">
+                <span class="nav-icon icon-social"></span>
+                <span class="nav-text">قبیله</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('events', this)">
+                <span class="nav-icon icon-event"></span>
+                <span class="nav-text">رویدادها</span>
+            </div>
         </div>
     </div>
+
+    <script>
+        function switchTab(tabId, element) {
+            // مخفی کردن همه تب‌ها
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // نمایش تب انتخاب شده
+            document.getElementById(tabId).classList.add('active');
+
+            // مدیریت کلاس اکتیو دکمه‌های پایین
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+        }
+    </script>
 </body>
 </html>
