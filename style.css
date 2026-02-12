@@ -1,4 +1,4 @@
-/* style.css - A simple and clean CSS file with English comments */
+/* style.css - A simple and clean CSS file with comments */
 
 /* Reset and basic settings */
 * {
@@ -261,4 +261,5 @@ body {
 /* Table row hover effect */
 .table tr:hover {
     background: #f5f7fa;             /* Light background on hover */
+
 }
