@@ -1,73 +1,116 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clash Royale Web Clone</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
-    <style>
-        /* --- CSS STYLES --- */
-        :root {
-            --bg-body: #111;
-            --main-blue: #1c4b78;
-            --cr-blue-light: #4a7ab5;
-            --cr-yellow: #fcd043;
-            --cr-gold-shadow: #c08b00;
-            --cr-orange: #ff9f0e;
-            --cr-wood: #d97b36;
-            --nav-bg: #222;
-            --font-main: 'Lalezar', cursive;
-        }
+    <title>Clash Royale Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-        * {
-            box-sizing: border-box;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+    <div class="phone-frame">
+        <header class="top-nav">
+            <div class="user-level">13</div>
+            <div class="res-container">
+                <div class="res-pill" style="color: #fcd043;">100,000 🟡</div>
+                <div class="res-pill" style="color: #50c878;">2,500 💎</div>
+            </div>
+        </header>
 
-        body {
-            background-color: var(--bg-body);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: var(--font-main);
-            color: white;
-        }
+        <main class="view-port">
+            
+            <section id="shop-tab" class="tab-section">
+                <h2>Daily Offers</h2>
+                <div class="shop-item">Gold Crate</div>
+                <div class="shop-item">Epic Card</div>
+                <div class="shop-item">Emotes</div>
+            </section>
 
-        /* Mobile Simulation Frame */
-        .mobile-container {
-            width: 375px;
-            height: 667px;
-            background-color: var(--main-blue);
-            border-radius: 25px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            display: flex;
-            flex-direction: column;
-            border: 8px solid #222;
-        }
+            <section id="cards-tab" class="tab-section">
+                <h2>Battle Deck</h2>
+                <div class="deck-grid">
+                    <div class="card-placeholder"><div class="elixir-drop">3</div></div>
+                    <div class="card-placeholder"><div class="elixir-drop">4</div></div>
+                    <div class="card-placeholder"><div class="elixir-drop">2</div></div>
+                    <div class="card-placeholder"><div class="elixir-drop">5</div></div>
+                    <div class="card-placeholder"><div class="elixir-drop">3</div></div>
+                    <div class="card-placeholder"><div class="elixir-drop">6</div></div>
+                    <div class="card-placeholder"><div class="elixir-drop">4</div></div>
+                    <div class="card-placeholder"><div class="elixir-drop">3</div></div>
+                </div>
+            </section>
 
-        /* Top Resources Bar */
-        .top-bar {
-            height: 65px;
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(to bottom, #2b5685, #1c3a59);
-            border-bottom: 3px solid #000;
-            z-index: 10;
-        }
+            <section id="battle-tab" class="tab-section active">
+                <div class="arena-banner">
+                    <p style="margin:0; font-size: 12px;">HIGHEST TROPHIES: 6500</p>
+                    <h1>ARENA 15</h1>
+                    <p style="margin:0; color: #fcd043;">LEAGUE II</p>
+                </div>
 
-        .resource {
-            background: rgba(0,0,0,0.5);
-            padding: 4px 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            border: 1px solid #4
+                <button class="battle-button">BATTLE</button>
+
+                <div class="chest-row">
+                    <div class="chest-slot">Empty</div>
+                    <div class="chest-slot" style="background: rgba(255,215,0,0.1); border-color: gold; color: gold;">Gold Chest</div>
+                    <div class="chest-slot">Empty</div>
+                    <div class="chest-slot">Empty</div>
+                </div>
+            </section>
+
+            <section id="social-tab" class="tab-section">
+                <h2>Clan Chat</h2>
+                <div class="chat-box">
+                    <p><b style="color:#3399ff">Prince:</b> Good game everyone!</p>
+                    <p><b style="color:#ff9f0e">Leader:</b> Don't forget the Clan War.</p>
+                    <p style="color: #50c878; font-style: italic;">* Knight requested Giant *</p>
+                </div>
+            </section>
+
+            <section id="events-tab" class="tab-section">
+                <h2>Special Events</h2>
+                <div class="event-banner">
+                    <b>Double Elixir Challenge</b>
+                </div>
+            </section>
+
+        </main>
+
+        <nav class="bottom-nav">
+            <div class="nav-link" onclick="showTab('shop-tab', this)">
+                <span class="nav-icon">🛒</span>
+                <span class="nav-text">Shop</span>
+            </div>
+            <div class="nav-link" onclick="showTab('cards-tab', this)">
+                <span class="nav-icon">🎴</span>
+                <span class="nav-text">Cards</span>
+            </div>
+            <div class="nav-link active" onclick="showTab('battle-tab', this)">
+                <span class="nav-icon" style="font-size: 34px;">⚔️</span>
+                <span class="nav-text">Battle</span>
+            </div>
+            <div class="nav-link" onclick="showTab('social-tab', this)">
+                <span class="nav-icon">🛡️</span>
+                <span class="nav-text">Social</span>
+            </div>
+            <div class="nav-link" onclick="showTab('events-tab', this)">
+                <span class="nav-icon">🎉</span>
+                <span class="nav-text">Events</span>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        function showTab(tabId, btnElement) {
+            const sections = document.querySelectorAll('.tab-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+    </script>
+</body>
+</html>
